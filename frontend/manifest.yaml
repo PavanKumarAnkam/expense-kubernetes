@@ -142,6 +142,6 @@ spec:
     tier: app
   ports:
     - protocol: TCP # UPPERCASE only
-      port: 8080 # service-port or clusterIP port
+      port: 80        # service-port or clusterIP port
       targetPort: 8080 # port of target container/pod(here-->nginx)
   type: LoadBalancer # Exposes the service internally within the pod n/w
