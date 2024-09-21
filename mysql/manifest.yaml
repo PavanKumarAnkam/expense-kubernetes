@@ -25,3 +25,18 @@ spec:
         image: joindevops/mysql:v1.0
         # ports:
         # - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector: # service is going to select a pod where it finds these labels
+     component: mysql
+     project: expense
+     tier: db
+  ports:
+    - protocol: TCP         # UPPERCASE only
+      port: 3306            # service-port or clusterIP port
+      targetPort: 3306      # port of target container/pod(here-->nginx)
+  type: ClusterIP           # Exposes the service internally within the pod n/w
