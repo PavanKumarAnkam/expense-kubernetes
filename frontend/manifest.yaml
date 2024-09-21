@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels: # deployment related labels
+    component: frontend
+    project: expense
+    tier: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     component: frontend
+     project: expense
+     tier: app
+  template: #pod definition
+    metadata:
+      labels:
+        component: frontend
+        project: expense
+        tier: app
+    spec:
+      containers:
+      - name: frontend
+        image: joindevops/frontend:v1.0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector: # service is going to select a pod where it finds these labels
+     component: frontend
+     project: expense
+     tier: app
+  ports:
+    - protocol: TCP         # UPPERCASE only
+      port: 80              # service-port or clusterIP port
+      targetPort: 80        # port of target container/pod(here-->nginx)
+  type: LoadBalancer        # Exposes the service internally within the pod n/w
